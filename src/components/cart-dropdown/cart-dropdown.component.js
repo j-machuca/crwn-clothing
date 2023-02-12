@@ -12,11 +12,12 @@ import { CartContext } from "../../context/cart.context";
 import "./cart-dropdown.styles.scss";
 
 const CartDropdown = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, setIsCartOpen } = useContext(CartContext);
 
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
+    setIsCartOpen(false);
     navigate("/checkout");
   };
 
