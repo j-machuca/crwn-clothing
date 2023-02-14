@@ -1,4 +1,4 @@
-import CategoryItem from "../category-item/category-item.component.js";
+import ShopItem from "../shop-item/shop-item.component.js";
 
 import "./categories-styles.scss";
 
@@ -6,7 +6,7 @@ const Categories = ({ categories }) => {
   return (
     <div className="categories-container">
       {categories.map((category) => {
-        return <CategoryItem key={category.id} category={category} />;
+        return <ShopItem key={category.id} category={category} />;
       })}
     </div>
   );
