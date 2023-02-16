@@ -10,9 +10,6 @@ import { CartContext } from "../../../context/cart.context";
 import CartIcon from "../../cart-icon/cart-icon.component";
 import CartDropdown from "../../cart-dropdown/cart-dropdown.component";
 
-// Styles
-import "./navigation.styles";
-
 // Assets
 import { ReactComponent as Logo } from "../../../assets/img/crown.svg";
 
@@ -36,11 +33,11 @@ const Navigation = () => {
           <Logo className="logo" />
         </LogoContainer>
         <NavLinksContainer>
-          <NavLink className="nav-link" to="/shop">
-            SHOP
-          </NavLink>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink onClick={signOutUser}>SIGN OUT</NavLink>
+            <span className="nav-link" onClick={signOutUser}>
+              SIGN OUT
+            </span>
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
           )}
