@@ -1,20 +1,15 @@
-import "./shop-item.styles.scss";
+import { ShopItemContainer, Body, BackgroundImage } from "./shop-item.styles";
 
 const ShopItem = ({ category }) => {
   const { title, imageUrl } = category;
   return (
-    <div className="shop-item-container">
-      <div
-        className="background-image"
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-        }}
-      ></div>
-      <div className="shop-item-body-container">
+    <ShopItemContainer>
+      <BackgroundImage imageUrl={imageUrl} />
+      <Body>
         <h2>{title}</h2>
         <p>Shop Now</p>
-      </div>
-    </div>
+      </Body>
+    </ShopItemContainer>
   );
 };
 
