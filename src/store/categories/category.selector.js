@@ -9,17 +9,12 @@ export const selectCategories = createSelector(
   }
 );
 
-export const selectCategoriesMap = createSelector([selectCategories], (state) =>
-  state.categories.categories.reduce((acc, category) => {
-    const { title, items } = category;
-    acc[title] = items;
-    return acc;
-  }, {})
+export const selectCategoriesMap = createSelector(
+  [selectCategories],
+  (categories) =>
+    categories.reduce((acc, category) => {
+      const { title, items } = category;
+      acc[title] = items;
+      return acc;
+    }, {})
 );
-
-// export const selectCategoriesMap = (state) =>
-//   state.categories.categories.reduce((acc, category) => {
-//     const { title, items } = category;
-//     acc[title] = items;
-//     return acc;
-//   }, {});
