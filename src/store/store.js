@@ -1,20 +1,29 @@
+// Redux
 import { compose, createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
 
+// Persist State and reducer on localstorage
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { rootReducer } from "./root-reducer";
-// root-reduce
+// Redux Thunk
 
-const middlewares = [process.env.NODE_ENV === "development" && logger].filter(
-  Boolean
-);
+import thunk from "redux-thunk";
+
+// utils
+import logger from "redux-logger";
+
+// root-reducer
+import { rootReducer } from "./root-reducer";
+
+const middlewares = [
+  process.env.NODE_ENV === "development" && logger,
+  thunk,
+].filter(Boolean);
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["user"],
+  whitelist: ["cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
