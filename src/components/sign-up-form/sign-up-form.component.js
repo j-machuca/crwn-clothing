@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -7,6 +8,8 @@ import {
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+
+import { signUpStart } from "../../store/user/user.action";
 
 import "./sign-up-form.styles.scss";
 
@@ -20,6 +23,8 @@ const defaultFormFields = {
 const SignUpForm = () => {
   // State
   const [formFields, setFormFields] = useState(defaultFormFields);
+
+  const dispatch = useDispatch();
 
   // State Destructuring
   const { displayName, email, password, confirmPassword } = formFields;
@@ -45,13 +50,8 @@ const SignUpForm = () => {
     }
 
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      dispatch(signUpStart(email, password, displayName));
       resetFormFields();
-
-      await createUserDocumentFromAuth(user, { displayName });
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("cannot create user, email already in use");

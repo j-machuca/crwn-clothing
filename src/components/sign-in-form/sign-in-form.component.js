@@ -11,8 +11,8 @@ import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 import "./sign-in-form.styles.scss";
 
-// Utils
-import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+// Actions
+
 import {
   googleSignInStart,
   emailSignInStart,
