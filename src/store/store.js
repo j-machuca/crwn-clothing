@@ -7,7 +7,7 @@ import storage from "redux-persist/lib/storage";
 
 // Redux Saga
 
-import { createSagaMiddleware } from "redux-saga";
+import createSagaMiddleware from "redux-saga";
 
 // Sagas
 
