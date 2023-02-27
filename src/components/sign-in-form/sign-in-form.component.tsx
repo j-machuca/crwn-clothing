@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 
 import { useDispatch } from "react-redux";
 
@@ -9,7 +9,7 @@ import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 // Styles
 
-import "./sign-in-form.styles.scss";
+import "./sign-in-form.styles.tsx";
 
 // Actions
 
@@ -39,14 +39,14 @@ const SignInForm = () => {
 
   // Handlers
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields((prevState) => {
       return { ...prevState, [name]: value };
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { email, password } = formFields;
 
@@ -55,18 +55,12 @@ const SignInForm = () => {
 
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          alert("Wrong Credentials");
-          break;
-        case "auth/user-not-found":
-          alert("No user with this email");
-          break;
-        default:
-          console.log(error);
+      if (error && error) {
+        console.log(error);
       }
     }
   };
+
   // Utils
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -98,7 +92,7 @@ const SignInForm = () => {
           onChange={handleChange}
           name="password"
           value={password}
-          minLength="8"
+          minLength={8}
         />
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>

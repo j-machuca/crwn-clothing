@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, FC, ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
+
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
@@ -15,7 +17,7 @@ const defaultFormFields = {
   confirmPassword: "",
 };
 
-const SignUpForm = () => {
+const SignUpForm: FC = () => {
   // State
   const [formFields, setFormFields] = useState(defaultFormFields);
 
@@ -24,7 +26,7 @@ const SignUpForm = () => {
   // State Destructuring
   const { displayName, email, password, confirmPassword } = formFields;
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields((prevState) => {
       return { ...prevState, [name]: value };
@@ -35,7 +37,7 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { displayName, email, password, confirmPassword } = formFields;
 
@@ -48,7 +50,7 @@ const SignUpForm = () => {
       dispatch(signUpStart(email, password, displayName));
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
+      if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
         alert("cannot create user, email already in use");
       }
       console.log("user creation encountered and error", error);
@@ -83,7 +85,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           name="password"
           value={password}
-          minLength="8"
+          minLength={8}
         />
         <FormInput
           label="Confirm Password"
@@ -92,7 +94,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           name="confirmPassword"
           value={confirmPassword}
-          minLength="8"
+          minLength={8}
         />
         <Button type="submit">Sign Up</Button>
       </form>
