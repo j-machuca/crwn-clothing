@@ -1,8 +1,8 @@
 // Redux
-import { compose, createStore, applyMiddleware } from "redux";
+import { compose, createStore, applyMiddleware, Middleware } from "redux";
 
 // Persist State and reducer on localstorage
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, PersistConfig } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 // Redux Saga
@@ -19,14 +19,30 @@ import logger from "redux-logger";
 // root-reducer
 import { rootReducer } from "./root-reducer";
 
+// types
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+  whitelist: (keyof RootState)[];
+};
+
+// Saga middleware
+
 const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [
   process.env.NODE_ENV === "development" && logger,
   sagaMiddleware,
-].filter(Boolean);
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
-const persistConfig = {
+const persistConfig: ExtendedPersistConfig = {
   key: "root",
   storage,
   whitelist: ["cart"],
