@@ -13,8 +13,14 @@ import {
 
 import "./category.styles.scss";
 
+type CategoryRouteParams = {
+  category: string;
+};
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<
+    keyof CategoryRouteParams
+  >() as CategoryRouteParams;
 
   const c = category[0].toUpperCase() + category.substring(1);
 
